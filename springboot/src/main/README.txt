@@ -53,3 +53,10 @@ src/test/java  测试程序
 同一协议，同一ip，同一端口，三同中有一不同就产生了跨域。
 
 
+postman - controller - service
+1.创建 Car 实体类
+2.CarService.list() - 模拟数据
+3.CarController.list()
+4.postman
+
+

@@ -1,0 +1,136 @@
+
+@Copyright by SONG
+
+常用th标签:
+关键字	功能介绍	案例
+th:id	替换id	<input th:id="'xxx' + ${collect.id}"/>
+th:text	文本替换	<p th:text="${collect.description}">description</p>
+th:utext	支持html的文本替换	<p th:utext="${htmlcontent}">conten</p>
+th:object	替换对象	<div th:object="${session.user}">
+th:value	属性赋值	<input th:value="${user.name}" />
+th:with	变量赋值运算	<div th:with="isEven=${prodStat.count}%2==0"></div>
+th:style	设置样式	th:style="'display:' + @{(${sitrue} ? 'none' : 'inline-block')} + ''"
+th:onclick	点击事件	th:onclick="'getCollect()'"
+th:each	属性赋值	tr th:each="user,userStat:${users}">
+th:if	判断条件	<a th:if="${userId == collect.userId}" >
+th:unless	和th:if判断相反	<a th:href="@{/login}" th:unless=${session.user != null}>Login</a>
+th:href	链接地址	<a th:href="@{/login}" th:unless=${session.user != null}>Login</a> />
+th:switch	多路选择 配合th:case 使用	<div th:switch="${user.role}">
+th:case	th:switch的一个分支	<p th:case="'admin'">User is an administrator</p>
+th:fragment	布局标签，定义一个代码片段，方便其它地方引用	<div th:fragment="alert">
+th:include	布局标签，替换内容到引入的文件	<head th:include="layout :: htmlhead" th:with="title='xx'"></head> />
+th:replace	布局标签，替换整个标签到引入的文件	<div th:replace="fragments/header :: title"></div>
+th:selected	selected选择框 选中	th:selected="(${xxx.id} == ${configObj.dd})"
+th:src	图片类地址引入	<img class="img-responsive" alt="App Logo" th:src="@{/img/logo.png}" />
+th:inline	定义js脚本可以使用变量	<script type="text/javascript" th:inline="javascript">
+th:action	表单提交的地址	<form action="subscribe.html" th:action="@{/subscribe}">
+th:remove	删除某个属性	<tr th:remove="all"> 1.all:删除包含标签和所有的孩子。2.body:不包含标记删除,但删除其所有的孩子。3.tag:包含标记的删除,但不删除它的孩子。4.all-but-first:删除所有包含标签的孩子,除了第一个。5.none:什么也不做。这个值是有用的动态评估。
+th:attr	设置标签属性，多个属性可以用逗号分隔	比如 th:attr="src=@{/image/aa.jpg},title=#{logo}"，此标签不太优雅，一般用的比较少。
+还有非常多的标签，这里只列出最常用的几个,由于一个标签内可以包含多个th:x属性，其生效的优先级顺序为:
+include,each,if/unless/switch/case,with,attr/attrprepend/attrappend,value/href,src ,etc,text/utext,fragment,remove。
+
+
+
+内联js
+
+内联文本：[[...]]内联文本的表示方式，使用时，必须先用th:inline="text/javascript/none"激活，th:inline可以在父级标签内使用，甚至作为body的标签。内联文本尽管比th:text的代码少，不利于原型显示。
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+...
+var username = /*[[${sesion.user.name}]]*/ 'Sebastian';
+var size = /*[[${size}]]*/ 0;
+...
+/*]]>*/
+</script>
+js附加代码：
+
+/*[+
+var msg = 'This is a working application';
++]*/
+js移除代码：
+
+/*[- */
+var msg = 'This is a non-working template';
+/* -]*/
+
+
+
+
+内嵌变量
+
+为了模板更加易用，Thymeleaf还提供了一系列Utility对象（内置于Context中），可以通过#直接访问：
+
+dates ： java.util.Date的功能方法类。
+calendars : 类似#dates，面向java.util.Calendar
+numbers : 格式化数字的功能方法类
+strings : 字符串对象的功能类，contains,startWiths,prepending/appending等等。
+objects: 对objects的功能类操作。
+bools: 对布尔值求值的功能方法。
+arrays：对数组的功能类方法。
+lists: 对lists功能类方法
+sets
+maps
+...
+
+下面用一段代码来举例一些常用的方法：
+
+dates
+/*
+ * Format date with the specified pattern
+ * Also works with arrays, lists or sets
+ */
+${#dates.format(date, 'dd/MMM/yyyy HH:mm')}
+${#dates.arrayFormat(datesArray, 'dd/MMM/yyyy HH:mm')}
+${#dates.listFormat(datesList, 'dd/MMM/yyyy HH:mm')}
+${#dates.setFormat(datesSet, 'dd/MMM/yyyy HH:mm')}
+
+/*
+ * Create a date (java.util.Date) object for the current date and time
+ */
+${#dates.createNow()}
+
+/*
+ * Create a date (java.util.Date) object for the current date (time set to 00:00)
+ */
+${#dates.createToday()}
+
+
+
+strings
+/*
+ * Check whether a String is empty (or null). Performs a trim() operation before check
+ * Also works with arrays, lists or sets
+ */
+${#strings.isEmpty(name)}
+${#strings.arrayIsEmpty(nameArr)}
+${#strings.listIsEmpty(nameList)}
+${#strings.setIsEmpty(nameSet)}
+
+/*
+ * Check whether a String starts or ends with a fragment
+ * Also works with arrays, lists or sets
+ */
+${#strings.startsWith(name,'Don')}                  // also array*, list* and set*
+${#strings.endsWith(name,endingFragment)}           // also array*, list* and set*
+
+/*
+ * Compute length
+ * Also works with arrays, lists or sets
+ */
+${#strings.length(str)}
+
+/*
+ * Null-safe comparison and concatenation
+ */
+${#strings.equals(str)}
+${#strings.equalsIgnoreCase(str)}
+${#strings.concat(str)}
+${#strings.concatReplaceNulls(str)}
+
+
+
+/*
+ * Random
+ */
+${#strings.randomAlphanumeric(count)}

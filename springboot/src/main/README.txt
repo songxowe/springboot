@@ -65,7 +65,14 @@ postman - controller - service
 thymeleaf 模板开发:
 1.New Empty Project: thymeleaf
 2.New Module – Spring Initializr – 勾选 Template Engines:Thymeleaf
-3.修改 resources/application.properties
+
+  pom.xml 新增依赖: thymeleaf
+  resources 下分别创建目录:
+  static    - 静态资源 css js images
+  templates - 页面模板 html
+  i18n      - xxx_xx_XX.properties xxx_en_US.properties
+
+3.修改 resources/application.yml
 4.新建控制器 controller/ThymeleafController.java
 5.新建模板 resources/templates/hello.html
 6.修改 ThymeleafApplication.java

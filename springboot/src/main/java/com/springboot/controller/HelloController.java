@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController // 以 json 响应数据, 无需配置 jackson
 public class HelloController {
 
-  @RequestMapping("hello")
+  @RequestMapping("hellospringboot")
   public String hello() {
     return "Hello Spring Boot.";
   }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Thymeleaf</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+  <h1>Thymeleaf:Spring Boot自带的前端模板</h1>
+  <img th:src="@{/images/nodejs.png}" alt="nodejs" th:width="200" th:height="150">
+
+  <h1>标签常用方法</h1>
+  <h3>赋值+字符串拼接</h3>
+  <p th:text="${car.name}">车名:</p>
+  <span th:text="'车的传奇: '+${car.name}+'!'"></span>
+
+  <h5>字符串拼接简洁的写法</h5>
+  <span th:text="|车的传奇: ${car.name}|"></span>
+
+  <h3>条件判断 If/Unless</h3>
+  <span th:if="${car.price==8989}">8989恰好:if满足条件</span><br/>
+  <span th:unless="${car.price==8980}">8980太贵:unless满足条件</span><br/>
+  <span th:unless="${car.price==8989}">8980太贵:unless满足不条件</span><br/>
+
+  <h3>for 循环</h3>
+  <table class="table table-striped table-hover">
+    <tr>
+      <th>NO.</th>
+      <th>车名</th>
+      <th>价格</th>
+      <th>生产日期</th>
+    </tr>
+    <tr th:each="car : ${cars}">
+      <td th:text="${car.id}">ID</td>
+      <td th:text="${car.name}">车名</td>
+      <td th:text="${#numbers.formatDecimal(car.price, 1, 2)}">价格</td>
+      <td th:text="${#dates.format(car.createDate, 'yyyy-MM-dd')}">生产日期</td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

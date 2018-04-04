@@ -60,3 +60,22 @@ postman - controller - service
 4.postman
 
 
+
+-- 20180404 ---------------------
+thymeleaf 模板开发:
+1.New Empty Project: thymeleaf
+2.New Module – Spring Initializr – 勾选 Template Engines:Thymeleaf
+3.修改 resources/application.properties
+4.新建控制器 controller/ThymeleafController.java
+5.新建模板 resources/templates/hello.html
+6.修改 ThymeleafApplication.java
+7.启动 ThymeleafApplication 浏览器查看效果
+
+
+
+i18n 国际化开发步骤:
+1.resources/i18n 下新建 messages.properties
+2.在 resources/application.properties 中设置 i18n
+3.新建 config/I18nConfig.java 设置 cookie 区域和拦截器
+4.控制器
+5.网页 expression.html

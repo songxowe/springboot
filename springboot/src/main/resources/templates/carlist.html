@@ -62,6 +62,18 @@
   <a th:href="@{/hithymeleaf}">Hello Thymeleaf</a><br>
   <a th:href="@{/hithymeleaf(name=${car.name})}">Hello Thymeleaf</a><br>
   <a th:href="@{/hithymeleaf(name=${car.name},price=120)}">Hello Thymeleaf</a><br>
+
+  <h3>文字国际化表达式</h3>
+  <p th:text="#{welcome}"></p>
+
+  <li id="i18n">
+    <th:block th:if="${#locale.getCountry().equals('US')}">
+      <a th:attr="href='/carlist?locale=zh_CN'" th:text="#{lang_zh}"></a>
+    </th:block>
+    <th:block th:if="${#locale.getCountry().equals('CN')}">
+      <a th:attr="href='/carlist?locale=en_US'" th:text="#{lang_en}"></a>
+    </th:block>
+  </li>
 </div>
 
 <h1>布局</h1>

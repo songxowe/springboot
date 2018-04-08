@@ -82,7 +82,26 @@ thymeleaf 模板开发:
 
 i18n 国际化开发步骤:
 1.resources/i18n 下新建 messages.properties
-2.在 resources/application.properties 中设置 i18n
-3.新建 config/I18nConfig.java 设置 cookie 区域和拦截器
+2.在 resources/application.yml 中设置 i18n
+3.新建 config/WebConfig.java 设置 cookie 区域和拦截器
 4.控制器
-5.网页 expression.html
+5.网页 carlist.html
+
+
+
+项目前后端分离则控制器使用 @RestController - restful 风格,不需 thymeleaf 模板
+项目前后端不分离(页面和业务逻辑都在后端服务器)则使用控制器使用 @Controller,跳转版,需要 thymeleaf 模板
+
+
+下载安装前端服务器:
+https://nodejs.org
+
+打开 cmd 输入命令:
+C:\Users\SONG>node -v
+v8.7.0
+
+C:\Users\SONG>npm -v
+5.4.2
+
+执行命令:
+npm --registry=https://registry.npm.taobao.org i -g live-server

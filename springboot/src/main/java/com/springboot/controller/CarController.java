@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 import java.util.List;
 
+@SessionAttributes(types = {String.class}, names = {"car"})
 @Controller
 public class CarController {
 

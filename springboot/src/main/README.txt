@@ -142,6 +142,12 @@ spring.datasource.password=root
 
 7.service: EmpService
 8.controller: EmpController
-5.resources/templates/emplist.html
-6.启动 MybatisApplication 浏览器查看效果
-  http://127.0.0.1:8080/emp_list
+9.postman 测试所有的 api 接口
+
+10.前端服务器
+11.html + css + js + jquery
+12.进入前端目录:
+  D:\Workspaces\IdeaProjects\springboot\springboot\src\webfrontend
+13.live-server
+14.启动 live-server 浏览器查看效果
+  http://127.0.0.1:8080

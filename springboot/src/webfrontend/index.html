@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端 Car</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1>前端 Car</h1>
+  <table class="table table-striped table-hover">
+    <thead>
+    <tr>
+      <th>车名</th>
+      <th>价格</th>
+      <th>出厂日期</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <th>车名</th>
+      <th>价格</th>
+      <th>出厂日期</th>
+      <th>操作</th>
+    </tr>
+    </tfoot>
+    <tbody>
+    <!--
+    <tr id="9">
+      <td>兰博基尼</td>
+      <td>99999</td>
+      <td>2017-11-28</td>
+      <td>
+        <button class="btn btn-primary" onclick="findByIdCar(9)" type="button">修改</button>
+        <button class="btn btn-danger" onclick="removeCar(9,'兰博基尼')" type="button">删除</button>
+      </td>
+    </tr>
+    -->
+    </tbody>
+  </table>
+
+  <div class="form-group">
+    <label>车名:</label>
+    <input id="id" type="hidden">
+    <input id="name" placeholder="车名" class="form-control" type="text">
+    <small>*</small>
+  </div>
+  <div class="form-group">
+    <label>价格:</label>
+    <input id="price" placeholder="价格" class="form-control"
+           step="0.01" type="number">
+  </div>
+  <div class="form-group">
+    <label>出厂日期:</label>
+    <input id="createDate" class="form-control" type="date">
+  </div>
+  <button id="btnAdd" class="btn btn-info btn-block" type="button">新增</button>
+  <button id="btnModify" class="btn btn-success btn-block" type="button">修改</button>
+  <br><br><br><br>
+</div>
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script>
+  // SPA: Single Page Application 单页应用程序
+
+  // 定义 url 常量
+  const URL = "http://127.0.0.1:8086/api/"
+
+  // 当加载完网页内容,则显示数据
+  $(() => {
+    // 查询所有数据
+    $.ajax({
+      url: URL + "cars",
+      type: "get",
+      dataType: "json",
+      success: function (data) {
+        console.log(data)
+        $.each(data, (i, item) => {
+          // console.log(i, item, data[i])
+
+          var text = `
+          <tr id="${item.id}">
+            <td>${item.name}</td>
+            <td>${item.price}</td>
+            <td>${item.createDate}</td>
+            <td>
+              <button class="btn btn-primary"
+                onclick="findByIdCar(${item.id})" type="button">修改</button>
+              <button class="btn btn-danger"
+                onclick="removeCar(${item.id},'${item.name}')" type="button">删除</button>
+            </td>
+          </tr>
+          `
+
+          $("tbody").append(text);
+        })
+      }
+    })
+
+    // 设置修改按钮不可用
+    $("#btnModify").attr("disabled", "");
+
+    // 注册新增按钮事件
+    $("#btnAdd").click(() => {
+      // 验证表单参数
+
+      var data = {
+        "name": $("#name").val(),
+        "price": $("#price").val(),
+        "createDate": $("#createDate").val()
+      }
+
+      // 新增
+      $.ajax({
+        url: URL + "cars",
+        type: "post",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: () => {
+          // 重新加载本页
+          window.location.reload()
+        }
+      })
+    })
+
+    // 注册修改按钮事件
+    $("#btnModify").click(() => {
+      // 验证表单参数
+
+      var data = {
+        "id": $("#id").val(),
+        "name": $("#name").val(),
+        "price": $("#price").val(),
+        "createDate": $("#createDate").val()
+      }
+
+      // 修改
+      $.ajax({
+        url: URL + "cars",
+        type: "put",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: () => {
+          // 重新加载本页
+          window.location.reload()
+        }
+      })
+    })
+
+  })
+
+  function findByIdCar(id) {
+    console.log("修改", id)
+
+    // 根据 ID 查询
+    $.get(
+        URL + "cars/" + id,
+        (data) => {
+          // 设置新增按钮不可用
+          $("#btnAdd").attr("disabled", "");
+          // 设置修改按钮可用
+          $("#btnModify").removeAttr("disabled");
+
+          $("#id").val(data.id)
+          $("#name").val(data.name)
+          $("#price").val(data.price)
+          $("#createDate").val(data.createDate)
+        }
+    )
+  }
+
+  function removeCar(id, name) {
+    console.log("删除", id, name)
+    if (confirm("是否确认删除 " + name + " ?")) {
+      // 根据 ID 删除
+      $.ajax({
+        url: URL + "cars/" + id,
+        type: "delete",
+        success: function () {
+          $("#" + id).remove()
+        }
+      })
+    }
+  }
+</script>
+</body>
+</html>

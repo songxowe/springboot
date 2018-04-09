@@ -7,3 +7,12 @@ spring:
     cache: false
   messages:
     basename: i18n/messages
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/employee?useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+# 设置 mybatis 的别名(指定包下的类名即别名)
+mybatis:
+  type-aliases-package: com.springboot.domain

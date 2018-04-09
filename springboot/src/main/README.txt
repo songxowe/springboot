@@ -80,6 +80,7 @@ thymeleaf 模板开发:
 
 
 
+-- 20180408 ---------------------
 i18n 国际化开发步骤:
 1.resources/i18n 下新建 messages.properties
 2.在 resources/application.yml 中设置 i18n
@@ -98,10 +99,49 @@ https://nodejs.org
 
 打开 cmd 输入命令:
 C:\Users\SONG>node -v
-v8.7.0
+v9.11.1
 
 C:\Users\SONG>npm -v
-5.4.2
+5.6.0
 
 执行命令:
 npm --registry=https://registry.npm.taobao.org i -g live-server
+
+
+
+-- 20180409 ----------------
+Spring Boot + Mybatis + Mysql CRUD 开发步骤:
+1.New Project - New Modules - Spring Initializr - 勾选 Template Engines:Thymeleaf
+2.修改 pom.xml 新增 mybatis-spring-boot-starter 和 mysql-connector-java
+    <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+    <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+      <version>1.3.2</version>
+    </dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>6.0.6</version>
+		</dependency>
+
+3.修改 application.yml 配置 mybatis 和 spring.datasource
+  修改 Application.java 加入 @MapperScan("com.spingboot.mybatis.mapper")
+
+mybatis.type-aliases-package=com.spingboot.mybatis.domain
+
+spring.datasource.driverClassName=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/employee?useSSL=false&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=root
+
+4.domain: Emp
+5.mapper: EmpMapper
+6.JUnit : EmpMapperTest
+
+7.service: EmpService
+8.controller: EmpController
+5.resources/templates/emplist.html
+6.启动 MybatisApplication 浏览器查看效果
+  http://127.0.0.1:8080/emp_list

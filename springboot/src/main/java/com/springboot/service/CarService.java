@@ -1,30 +1,41 @@
 package com.springboot.service;
 
 import com.springboot.domain.Car;
+import com.springboot.mapper.CarMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 public class CarService {
+  @Autowired
+  private CarMapper carMapper;
 
   public List<Car> list() {
-    List<Car> cars = new ArrayList<>();
-    Car car = new Car();
-    car.setId(1);
-    car.setName("Benz");
-    car.setPrice(8989d);
-    car.setCreateDate(new Date());
-    cars.add(car);
+    return carMapper.find();
+  }
 
-    cars.add(new Car(2, "BMW", 9999d, new Date()));
-    cars.add(new Car(3, "Audi", 6669d, new Date()));
-    cars.add(new Car(4, "Golf", 5559d, new Date()));
-    cars.add(new Car(5, "Ford", 7779d, new Date()));
-    cars.add(new Car(6, "VW", 8889d, new Date()));
+  public Car find(Integer id) {
+    return carMapper.findById(id);
+  }
 
-    return cars;
+  @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, rollbackFor = Exception.class)
+  public int add(Car car) {
+    return carMapper.add(car);
+  }
+
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+  public int modify(Car car) {
+    return carMapper.modify(car);
+  }
+
+  @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+  public int remove(Integer id) {
+    return carMapper.remove(id);
   }
 }

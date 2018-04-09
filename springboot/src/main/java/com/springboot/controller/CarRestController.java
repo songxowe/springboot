@@ -6,10 +6,7 @@ import com.springboot.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,5 +36,23 @@ public class CarRestController {
     }
 
     return new ResponseEntity<>(car, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/cars", method = RequestMethod.POST)
+  public ResponseEntity<?> add(@RequestBody Car car) {
+    int count = carService.add(car);
+    return new ResponseEntity<>(count, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/cars", method = RequestMethod.PUT)
+  public ResponseEntity<?> modify(@RequestBody Car car) {
+    int count = carService.modify(car);
+    return new ResponseEntity<>(count, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/cars/{id}", method = RequestMethod.DELETE)
+  public ResponseEntity<?> remove(@PathVariable("id") Integer id) {
+    int count = carService.remove(id);
+    return new ResponseEntity<>(count, HttpStatus.OK);
   }
 }

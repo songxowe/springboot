@@ -8,6 +8,8 @@
 <body>
 <div class="container">
   <h1>Thymeleaf:Spring Boot自带的前端模板</h1>
+
+  <!-- 访问静态资源顺序: META-INF/resources > resources > static > public -->
   <img th:src="@{/images/nodejs.png}" alt="nodejs" th:width="200" th:height="150">
 
   <h1>标签常用方法</h1>
@@ -41,6 +43,7 @@
 
   <h1>标准表达式语法</h1>
   <h3>变量表达式</h3>
+  <h5>变量表达式即OGNL表达式或Spring EL表达式(在Spring术语中也叫model attributes)</h5>
   <span>变量表达式即OGNL表达式(对象导航语言)或Spring EL表达式(模型属性)</span>
   <!-- session 作用域 request 作用域-->
   <p th:text="|session:${session.car.name} request:${car.name}|"></p>
@@ -49,21 +52,26 @@
   </tr>
 
   <h3>选择(星号)表达式</h3>
+  <h5>选择表达式很像变量表达式，不过它们用一个预先选择的对象来代替上下文变量容器(map)来执行</h5>
   <span th:text="*{car.name}"></span>
   <div th:object="${car}">
     <span th:text="*{price}"/><br/>
   </div>
 
   <h3>url表达式</h3>
+  <h5>URL表达式指的是把一个有用的上下文或回话信息添加到URL，这个过程经常被叫做URL重写</h5>
   <a href="hithymeleaf">原生:</a><br/>
   <a href="hithymeleaf?name=jack">原生带参:</a><br/>
   <a href="hithymeleaf?name=jack&price=120">原生带参:</a><br/><br/>
 
   <a th:href="@{/hithymeleaf}">Hello Thymeleaf</a><br>
+
+  <h5>将括号内的内容作为URL参数处理，该语法避免使用字符串拼接，大大提高了可读性</h5>
   <a th:href="@{/hithymeleaf(name=${car.name})}">Hello Thymeleaf</a><br>
   <a th:href="@{/hithymeleaf(name=${car.name},price=120)}">Hello Thymeleaf</a><br>
 
   <h3>文字国际化表达式</h3>
+  <h5>文字国际化表达式允许从一个外部文件获取区域文字信息(.properties)，用Key索引Value</h5>
   <p th:text="#{welcome}"></p>
 
   <li id="i18n">

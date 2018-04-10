@@ -16,3 +16,4 @@ spring:
 # 设置 mybatis 的别名(指定包下的类名即别名)
 mybatis:
   type-aliases-package: com.springboot.domain
+  mapper-locations: mybatis/mapper/*.xml

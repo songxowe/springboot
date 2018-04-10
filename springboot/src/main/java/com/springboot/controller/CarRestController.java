@@ -18,9 +18,23 @@ public class CarRestController {
   @Autowired
   private CarService carService;
 
+  /*
   @RequestMapping(value = "/cars", method = RequestMethod.GET)
   public ResponseEntity<?> getCars() {
     List<Car> cars = carService.list();
+
+    if (cars.isEmpty()) {
+      return new ResponseEntity<>(new CustomType(400, "没有匹配的结果!"), HttpStatus.OK);
+    }
+
+    return new ResponseEntity<>(cars, HttpStatus.OK);
+  }*/
+
+  @RequestMapping(value = "/cars", method = RequestMethod.GET)
+  public ResponseEntity<?> getCars(
+      @RequestParam(value = "name", required = false) String name
+  ) {
+    List<Car> cars = carService.list(name);
 
     if (cars.isEmpty()) {
       return new ResponseEntity<>(new CustomType(400, "没有匹配的结果!"), HttpStatus.OK);

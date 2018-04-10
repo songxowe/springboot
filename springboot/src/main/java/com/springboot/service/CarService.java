@@ -16,6 +16,10 @@ public class CarService {
   @Autowired
   private CarMapper carMapper;
 
+  public List<Car> list(String name) {
+    return carMapper.findByParam(name);
+  }
+
   public List<Car> list() {
     return carMapper.find();
   }

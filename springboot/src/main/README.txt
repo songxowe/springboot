@@ -151,3 +151,9 @@ spring.datasource.password=root
 13.live-server
 14.启动 live-server 浏览器查看效果
   http://127.0.0.1:8080
+
+
+
+-- 20180410 -------------------
+1.mybatis 多条件查询
+2.spring boot data: jpa

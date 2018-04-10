@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface CarMapper {
 
+  List<Car> findByParam(@Param("name") String name);
+
   @Select("select id,name,price,create_date from car")
   @Results({
       @Result(property = "createDate", column = "create_date")
